@@ -1,17 +1,15 @@
-console.log(localStorage);
 let test1 = localStorage.kanap;
 console.log(test1);
 
-
 // Ce qui m'a débloqué : la ligne de code suivante puis la boucle, qui m'a permis de récupérer l'ID pour fetch.
 let copyOfLS = JSON.parse(localStorage.getItem("kanap"));
+console.log(copyOfLS);
 
 function displayCart() {
 for (let produit in copyOfLS) {
   let colors = copyOfLS[produit].color;
   let quantity = copyOfLS[produit].quantity;
-  
-  console.log(colors);
+  let quantityInCart = copyOfLS.length -1;
   let id = copyOfLS[produit]._id;
   console.log(id);
   fetch(`http://localhost:3000/api/products/${id}`)
@@ -20,7 +18,8 @@ for (let produit in copyOfLS) {
     console.log(data);
   /* à modifier */
     let price = data.price *= quantity;
-    document.getElementById("totalQuantity").innerHTML = price;
+    document.getElementById("totalQuantity").innerHTML = quantityInCart;
+    document.getElementById("totalPrice").innerHTML = price;
    /* à modifier */
     document.getElementById("cart__items").innerHTML += `<article class="cart__item" data-id="${id}" data-color="${colors}">
     <div class="cart__item__img">
@@ -42,7 +41,9 @@ for (let produit in copyOfLS) {
         </div>
       </div>
     </div>
-  </article>`;})
+  </article>`;
+
+})
 
 
 
