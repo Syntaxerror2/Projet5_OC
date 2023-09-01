@@ -51,45 +51,44 @@ for (let produit in copyOfLS) {
     </div>
   </article>`;
 
+  // On permet au client de modifier les quantités de canapé dynamiquement
+function changeQuantity() {
+  let input = document.querySelectorAll(".itemQuantity")
+  for(let i = 0; i < input.length; i++) {
+    input[i].addEventListener("change", (event) => {
+      event.preventDefault();
+
+  // On selectionne l'élément à modifier via son ID et sa couleur
+      let quantityModif = copyOfLS[i].quantity;
+      let qttmodifValue = input[i].valueAsNumber;
+      const resultFind = copyOfLS.find((element) => element.qttmodifValue !== quantityModif);
+
+      resultFind.quantity = qttmodifValue;
+      copyOfLS[i].quantity = resultFind.quantity;
+
+      localStorage.setItem("kanap", JSON.stringify(copyOfLS));
+      location.reload();
+    })}}
+    changeQuantity();
+
   //On permet la suppression au click en identifiant l'article à son id et sa couleur
   function deleteItem(id, color) {
     let buttons = document.querySelectorAll(".deleteItem");
     let items = copyOfLS;
     for (let button of Array.from(buttons)){
+        console.log(button);
         button.addEventListener("click", () => {
     for(i = 0; i < items.length; i++) {
      if(id == items[i][2] && color == items[i][0]) {
       items.splice(i, 1);
       localStorage.setItem("kanap", JSON.stringify(items));
       window.location.reload();
-     }
-    }})}}
+     }}})}}
+    deleteItem();  
+})}};
 
-// On permet au client de modifier les quantités de canapé dynamiquement
-
-    function changeQuantity(id, color, quantity) {
-      let change = document.querySelectorAll(".itemQuantity");
-      let items = copyOfLS;
-      for(let changes in Array.from(change)) {
-           changes.addEventListener("click", () => {
-            for (let i = 0; i < items.length; i++) {
-              if (id == items[i][2] && color == items[i][0]) {
-                items[i][1] = quantity;
-              }
-              localStorage.setItem("kanap", JSON.stringify(items));
-              window.location.reload();
-            }})}}
-changeQuantity();
-
-
-
-deleteItem();  
-
-}) 
-}};
 
 displayCart();
-
 
 
 
