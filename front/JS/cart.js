@@ -76,21 +76,25 @@ function changeQuantity() {
  
   function deleteItem() {
     let buttons = document.querySelectorAll(".deleteItem");
+    let items = copyOfLS;
     for(del of buttons) {
       del.addEventListener("click", () => {
     let dataId = del.closest(".cart__item").getAttribute("data-id");
     console.log(dataId);
     let dataColor = del.closest(".cart__item").getAttribute("data-color");
     console.log(dataColor);
-    for(let i = 0; i < copyOfLS.lengthy; i++) {
-      
+    for(let i = 0; i < items.length; i++) {
+      console.log(items[i].color);
+      console.log(items[i]._id);
+      console.log(items);
     
-    if(copyOfLS[i]._id == dataId && copyOfLS[i].color == dataColor) {
-        copyOfLS.splice(i, 1);
+    if(items[i]._id == dataId && items[i].color == dataColor) {
+        items.splice(i, 1);
       }
     }
-    localStorage.setItem("kanap", JSON.stringify(copyOfLS));
-    if(copyOfLS.length == 0) {
+    localStorage.setItem("kanap", JSON.stringify(items));
+    window.location.reload();
+    if(items.length == 0) {
       localStorage.removeItem("kanap");
     }
       });
@@ -98,32 +102,10 @@ function changeQuantity() {
     return;
   }
   deleteItem();
-  
-
-
-
-  /*
-function deleteItem(id, color) {
-  let buttons = document.querySelectorAll(".deleteItem");
-  let items = copyOfLS;
-  for (let button of buttons){
-      console.log(button);
-      button.addEventListener("click", () => {
-  for(i = 0; i < items.length; i++) {
-    let dataId = button.closest(".cart__item").getAttribute("data-id");
-    console.log(dataId);
-    let dataColor = button.closest(".cart__item").getAttribute("data-color");
-    console.log(dataColor);
-   if(id == items[i][2] && color == items[i][0]) {
-    items.splice(i, 1);
-    localStorage.setItem("kanap", JSON.stringify(items));
-    window.location.reload();
-   }}})}}
-  deleteItem(); */
-  
 
 })}};
 
 
 displayCart();
+
 
