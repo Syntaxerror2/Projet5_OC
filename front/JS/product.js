@@ -53,6 +53,3 @@ function displayProduct() {
     
 displayProduct();
 
-
-
-displayProduct();
