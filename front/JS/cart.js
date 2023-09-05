@@ -29,7 +29,7 @@ for (let produit in copyOfLS) {
   //à modifier 
     
   //Affichage dynamique du panier
-  document.getElementById("cart__items").innerHTML += `<article class="cart__item" canapeId="${id}" data-color="${colors}">
+  document.getElementById("cart__items").innerHTML += `<article class="cart__item" data-id="${id}" data-color="${colors}">
     <div class="cart__item__img">
       <img src="${data.imageUrl}" alt="${data.altTxt}" />
     </div>
@@ -42,10 +42,10 @@ for (let produit in copyOfLS) {
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
           <p>Qté : </p>
-          <input type="number" class="itemQuantity" canapeId="${id}" canapeColor=${colors}" name="itemQuantity" min="1" max="100" value="${quantity}">
+          <input type="number" class="itemQuantity" data-id="${id}" data-color=${colors}" name="itemQuantity" min="1" max="100" value="${quantity}">
         </div>
         <div class="cart__item__content__settings__delete">
-          <p class="deleteItem" canapeId="${id}" canapeColor=${colors}">Supprimer</p>
+          <p class="deleteItem" data-id="${id}" data-color="${colors}">Supprimer</p>
         </div>
       </div>
     </div>
@@ -70,33 +70,60 @@ function changeQuantity() {
       location.reload();
     })}}
     changeQuantity();
-
+   
   //On permet la suppression au click en identifiant l'article à son id et sa couleur
-  function deleteItem(id, color) {
+  
+ 
+  function deleteItem() {
     let buttons = document.querySelectorAll(".deleteItem");
-    let items = copyOfLS;
-    for (let button of Array.from(buttons)){
-        console.log(button);
-        button.addEventListener("click", () => {
-    for(i = 0; i < items.length; i++) {
-     if(id == items[i][2] && color == items[i][0]) {
-      items.splice(i, 1);
-      localStorage.setItem("kanap", JSON.stringify(items));
-      window.location.reload();
-     }}})}}
-    deleteItem();  
+    for(del of buttons) {
+      del.addEventListener("click", () => {
+    let dataId = del.closest(".cart__item").getAttribute("data-id");
+    console.log(dataId);
+    let dataColor = del.closest(".cart__item").getAttribute("data-color");
+    console.log(dataColor);
+    for(let i = 0; i < copyOfLS.lengthy; i++) {
+      
+    
+    if(copyOfLS[i]._id == dataId && copyOfLS[i].color == dataColor) {
+        copyOfLS.splice(i, 1);
+      }
+    }
+    localStorage.setItem("kanap", JSON.stringify(copyOfLS));
+    if(copyOfLS.length == 0) {
+      localStorage.removeItem("kanap");
+    }
+      });
+    }
+    return;
+  }
+  deleteItem();
+  
+
+
+
+  /*
+function deleteItem(id, color) {
+  let buttons = document.querySelectorAll(".deleteItem");
+  let items = copyOfLS;
+  for (let button of buttons){
+      console.log(button);
+      button.addEventListener("click", () => {
+  for(i = 0; i < items.length; i++) {
+    let dataId = button.closest(".cart__item").getAttribute("data-id");
+    console.log(dataId);
+    let dataColor = button.closest(".cart__item").getAttribute("data-color");
+    console.log(dataColor);
+   if(id == items[i][2] && color == items[i][0]) {
+    items.splice(i, 1);
+    localStorage.setItem("kanap", JSON.stringify(items));
+    window.location.reload();
+   }}})}}
+  deleteItem(); */
+  
+
 })}};
 
 
 displayCart();
 
-
-
-
-
-    
-
-
-
-
-displayCart();
