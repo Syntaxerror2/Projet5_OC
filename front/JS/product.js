@@ -31,33 +31,32 @@ function displayProduct() {
           }
 
 
-        function goToCart() {
-            for(i = 0; i < data.colors.length; i++) {
-                let dataColor = []
-                dataColor = data.colors[i];
-                console.log(dataColor);
-              
-                if(quantity.value > 0 && quantity.value < 100 && color.value === dataColor) {
+          function goToCart() {
+            let color = document.getElementById("colors").value;
+            let quantity = document.getElementById("quantity").value;
+            
+            for (let i = 0; i < data.colors.length; i++) {
+                let dataColor = data.colors[i];
+                
+                if (quantity > 0 && quantity < 100 && color === dataColor) {
                     let addedKanap = {
-                        color : color.value,
-                        quantity : Number(quantity.value),
-                        price : parseFloat(data.price),
+                        color: color,
+                        quantity: Number(quantity),
+                        price: parseFloat(data.price),
                         _id: id
-                    };         
-                    let cartArray = [];
-                    if(localStorage.getItem("kanap") !== null) {
-                    cartArray = JSON.parse(localStorage.getItem("kanap"));
-                    
-                    }
+                    };
+        
+                    let cartArray = JSON.parse(localStorage.getItem("kanap")) || [];
                     cartArray.push(addedKanap);
                     localStorage.setItem("kanap", JSON.stringify(cartArray));
                     window.location.href = "./cart.html";
-                } 
-                
-                else {
-                alert("Merci de remplir les champs correspondants");
+                    return; // Ajout de cette ligne pour sortir de la fonction si les conditions sont remplies
+                }
             }
-        }}
+        
+            // Si les conditions ne sont pas remplies, affichez l'alerte ici.
+            alert("Merci de remplir les champs correspondants.");
+        }
         
         
 
