@@ -32,7 +32,12 @@ function displayProduct() {
 
 
         function goToCart() {
-                if(quantity.value > 0 && quantity.value < 100 && color.value !== null) {
+            for(i = 0; i < data.colors.length; i++) {
+                let dataColor = []
+                dataColor = data.colors[i];
+                console.log(dataColor);
+              
+                if(quantity.value > 0 && quantity.value < 100 && color.value === dataColor) {
                     let addedKanap = {
                         color : color.value,
                         quantity : Number(quantity.value),
@@ -52,7 +57,7 @@ function displayProduct() {
                 else {
                 alert("Merci de remplir les champs correspondants");
             }
-        }
+        }}
         
         
 
