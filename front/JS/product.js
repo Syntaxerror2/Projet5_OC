@@ -31,13 +31,27 @@ function displayProduct() {
           }
 
 
-          function goToCart() {
+        function goToCart() {
             let color = document.getElementById("colors").value;
             let quantity = document.getElementById("quantity").value;
-            
+        
+            let storedCart = localStorage.getItem("kanap");
+        
+            let cartArray;
+            try {
+                cartArray = storedCart ? JSON.parse(storedCart) : [];
+            } catch (error) {
+                console.error("Error parsing storedCart:", error);
+                cartArray = [];
+            }
+        
+            console.log("Stored Cart:", cartArray);
+        
             for (let i = 0; i < data.colors.length; i++) {
                 let dataColor = data.colors[i];
-                
+        
+                console.log("Data Color:", dataColor);
+        
                 if (quantity > 0 && quantity < 100 && color === dataColor) {
                     let addedKanap = {
                         color: color,
@@ -46,7 +60,6 @@ function displayProduct() {
                         _id: id
                     };
         
-                    let cartArray = JSON.parse(localStorage.getItem("kanap")) || [];
                     cartArray.push(addedKanap);
                     localStorage.setItem("kanap", JSON.stringify(cartArray));
                     window.location.href = "./cart.html";
@@ -54,10 +67,9 @@ function displayProduct() {
                 }
             }
         
-            // Si les conditions ne sont pas remplies, affichez l'alerte ici.
+            // Si les conditions ne sont pas remplies, une alerte s'affiche.
             alert("Merci de remplir les champs correspondants.");
         }
-        
         
 
         function addToCart() {
